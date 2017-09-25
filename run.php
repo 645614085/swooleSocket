@@ -12,7 +12,6 @@ class Run{
 
     private $dispatch = array();
 
-
     public function dispatch($path,$params){
         $config = env("default");
 
