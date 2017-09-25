@@ -1,8 +1,12 @@
 <?php
 namespace swoole;
 
-define("APP_PATH",__DIR__.'/');
+include_once "core/Loader.php";
+
+include_once ("define.php");
 include_once ("function.php");
+
+
 
 class Run{
 
@@ -17,7 +21,10 @@ class Run{
         $path = array_filter($path);
 
         $controller = @$path[0]?strtolower(array_shift($params)).$config['controllerExtra']:$config['defaultController'];
-        $controller = "\\swoole\\Controller\\".$controller;
+
+        $nameSpace = "Controller\\";
+
+        $controller = $nameSpace.$controller;
         $action = @$path[0]?strtolower(array_shift($params)).$config['actionExtra']:$config['defaultAction'];
 
         if(!class_exists($controller)){
@@ -48,7 +55,8 @@ class Run{
 
 
     public  function run($path,$params){
-        spl_autoload_register(array($this, 'loadClass'));
+        \core\Loader::register();
+        //spl_autoload_register(array($this, 'loadClass'));
         $this->dispatch($path,$params);
     }
 

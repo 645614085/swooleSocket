@@ -1,0 +1,39 @@
+onConnect>>> Fd:
+onReceiver>>>   
+string(33) "swoole\Controller\indexController"
+onReceiver>>>   
+string(33) "swoole\Controller\indexController"
+onReceiver>>>   
+string(33) "swoole\Controller\indexController"
+[2017-09-25 11:39:34 #2616.2]	NOTICE	Server is shutdown now.
+onConnect>>> Fd:
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexControllerphpcontroller <Controller\indexController> is undefined 
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexControllerphpcontroller <Controller\indexController> is undefined 
+[2017-09-25 11:45:07 #2940.2]	NOTICE	Server is shutdown now.
+onConnect>>> Fd:
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexController.phpcontroller <Controller\indexController> is undefined 
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexController.phpcontroller <Controller\indexController> is undefined 
+[2017-09-25 11:47:24 #3106.2]	NOTICE	Server is shutdown now.
+onConnect>>> Fd:
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexController.phpcontroller <Controller\indexController> is undefined 
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller\indexController.phpcontroller <Controller\indexController> is undefined 
+[2017-09-25 11:49:15 #3182.2]	NOTICE	Server is shutdown now.
+onConnect>>> Fd:
+onReceiver>>>   
+PSR4 CLASS: Controller\indexControllerfilePAth: /www/web/Swoole/public_html/Controller/indexController.phpset Controller => Controller\indexController 
+Controller>>>开始执行
+dispatch 
+construct执行任务中！！！
+onReceiver>>>   
+dispatch 
+construct执行任务中！！！
+onReceiver>>>   
+dispatch 
+construct执行任务中！！！
+onClose>>> Fd:1 , 

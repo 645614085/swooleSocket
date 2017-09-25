@@ -6,7 +6,7 @@
  * Date: 2017/8/9
  * Time: 18:30
  */
-namespace swoole\Controller;
+namespace Controller;
 
 class indexController
 {

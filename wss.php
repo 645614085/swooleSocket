@@ -8,15 +8,15 @@ class Server{
 		'heartbeat_idle_time' => 60*60,
 		'daemonize' => true,
 		'worker_num'=>2,
-		'log_file'		=> '/www/web/swool/public_html/ws.log',
-		'ssl_cert_file' => "/www/web/swool/public_html/config/server.crt",
-		'ssl_key_file' => '/www/web/swool/public_html/config/server.key'
+		'log_file'		=> '/www/web/Swoole/public_html/ws.log',
+//		'ssl_cert_file' => "/www/web/swool/public_html/config/server.crt",
+//		'ssl_key_file' => '/www/web/swool/public_html/config/server.key'
 	];
 
 
 	public function __construct()
 	{
-		$this->server = new swoole_websocket_server("0.0.0.0",443,SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
+		$this->server = new swoole_websocket_server("0.0.0.0",9502,SWOOLE_PROCESS, SWOOLE_SOCK_TCP );
 
 		$this->server->set($this->config);
 
@@ -44,7 +44,7 @@ class Server{
 		$path = @$data['path'];
 		$data['params']['fd'] = $frame->fd;
 		$params = $data['params'];
-		$serv->index->run("",$params);
+		$serv->index->run("test/index",$params);
 		$serv->push($frame->fd,"test");
 	}
 
