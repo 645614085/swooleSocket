@@ -16,7 +16,7 @@ class Server
         'heartbeat_idle_time' => 60 * 60,
         'daemonize' => true,
         'worker_num' => 2,
-        'log_file' => '/www/web/Swoole/public_html/Tcp.log'
+        'log_file' => '/home/www/web/Swoole/public_html/ceshi.log'
     ];
 
 

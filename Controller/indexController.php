@@ -8,6 +8,8 @@
  */
 namespace Controller;
 
+use Model\testModel;
+
 class indexController
 {
     public $params = null;
@@ -29,6 +31,7 @@ class indexController
     public function indexAction($params)
     {
         echo $this->params;
+        testModel::select(array());
        // echo "complete goto indexAction" . serialize($params), "\n";
         echo "执行任务中！！！\n";
     }

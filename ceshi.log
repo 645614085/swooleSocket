@@ -1,0 +1,43 @@
+has connected fd=>1,
+has Received form 1=> {"path": "","params":{"a":1111}}
+
+run =>>> 
+set Controller => Controller\indexController 
+Controller>>>开始执行
+dispatch 
+constructCALLSTATIC:
+object(Model\testModel)#7 (5) {
+  ["table":protected]=>
+  string(4) "test"
+  ["db":"core\Model":private]=>
+  object(PDO)#9 (0) {
+  }
+  ["_instance":"core\Model":private]=>
+  object(core\DB)#8 (2) {
+    ["db":"core\DB":private]=>
+    object(PDO)#9 (0) {
+    }
+    ["config"]=>
+    array(4) {
+      ["dbHost"]=>
+      string(9) "127.0.0.1"
+      ["dbUser"]=>
+      string(4) "root"
+      ["dbPwd"]=>
+      string(10) "wdlinux.cn"
+      ["dbName"]=>
+      string(4) "test"
+    }
+  }
+  ["modelParams":"core\Model":private]=>
+  array(0) {
+  }
+  ["sql":"core\Model":private]=>
+  array(0) {
+  }
+}
+这是model：PHP Notice:  Undefined index: where in /home/www/web/Swoole/public_html/core/Model.php on line 88
+select * from test
+执行任务中！！！
+Receive 执行结束 
+has disConnected fd = 1,
