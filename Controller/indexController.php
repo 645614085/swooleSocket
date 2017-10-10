@@ -8,6 +8,7 @@
  */
 namespace Controller;
 
+use core\Redis;
 use Model\testModel;
 
 class indexController
@@ -31,8 +32,8 @@ class indexController
     public function indexAction($params)
     {
         echo $this->params;
-        testModel::select(array());
-       // echo "complete goto indexAction" . serialize($params), "\n";
-        echo "执行任务中！！！\n";
+        var_dump(testModel::where(['c1'=>2])->select());
+        var_dump(testModel::add(['c1'=>2,'c2'=>3,'c3'=>4]));
+        var_dump(Redis::getInstance()->redis()->keys("*"));
     }
 }

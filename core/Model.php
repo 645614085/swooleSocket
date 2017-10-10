@@ -12,8 +12,6 @@ namespace core;
 class Model
 {
 
-    private $db = null;
-
     private $_instance = null;
 
     protected  $table = null;
@@ -26,7 +24,6 @@ class Model
     {
        $config = env("database");
        $this->_instance = DB::getInstance($config);
-       $this->db = $this->_instance->db();
     }
 
 
@@ -46,13 +43,18 @@ class Model
         if(method_exists($model,"model".ucfirst($name))){
             return call_user_func_array([$model,"model".ucfirst($name)],$arguments);
         }
-        return false;
     }
 
     public function executeQuery($sql){//需要添加断线重连
         echo $sql,"\n";
-        $result = $this->db->prepare($sql);
+        $result = $this->_instance->db()->prepare($sql);
         $result->execute($this->modelParams);
+        var_dump($this->modelParams);
+        if(end($result->errorInfo())=="MySQL server has gone away"){//断线重连
+            $this->_instance->connect();
+            $result = $this->_instance->db()->prepare($sql);
+            $result->execute($this->modelParams);
+        }
         $this->modelParams = array();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         return $result->fetchall();
@@ -70,8 +72,8 @@ class Model
         $values = "";
         foreach($params as $key=>$val){
             $column .= "`$key`, ";
-            $values .= ":".$column."Value";
-            $this->modelParams[":".$column."Value"]=$val;
+            $values .= ":".$key."Value, ";
+            $this->modelParams[":".$key."Value"]=$val;
         }
         $column = rtrim($column,", ");
         $values = rtrim($values,", ");
@@ -95,10 +97,10 @@ class Model
          if(count($params)>0 && isset($this->sql['where'])){
              $updateSql = " set ";
              foreach($params as $key=>$val){
-                 $updateSql .= "  `$key`= ".":".$key."Value";
-                 $this->modelParams[":".$key."Value"];
+                 $updateSql .= "  `$key`= ".":".$key."Value, ";
+                 $this->modelParams[":".$key."Value"] = $val;
              }
-         $sql = "update ".$this->table.$updateSql." ".$this->sql['where'];
+         $sql = "update ".$this->table.rtrim($updateSql,", ")." ".$this->sql['where'];
          $this->executeQuery($sql);
          }
 
@@ -112,7 +114,7 @@ class Model
     }
 
     //where
-    public function where($params){
+    public function modelWhere($params){
         $this->sql['where'] = " where ";
         foreach($params as $key=>$val){
             $this->modelParams[':'.$key.'Where'] = $val;
@@ -126,7 +128,7 @@ class Model
        if($begain && $limit){
            $this->sql['limit'] = " limit $begain $limit ";
        }
-       return $this;
+        return $this;
     }
 
 }
