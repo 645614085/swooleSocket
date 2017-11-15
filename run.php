@@ -15,16 +15,17 @@ class Run{
     public function dispatch($path,$params){
         $config = env("default");
 
-        $path = explode("/",$path);
+        $path = explode("/",ltrim($path,'/'));
 
         $path = array_filter($path);
 
-        $controller = @$path[0]?strtolower(array_shift($params)).$config['controllerExtra']:$config['defaultController'];
+        $controller = @$path[0]?strtolower(array_shift($path)).$config['controllerExtra']:$config['defaultController'];
+
 
         $nameSpace = "Controller\\";
 
         $controller = $nameSpace.$controller;
-        $action = @$path[0]?strtolower(array_shift($params)).$config['actionExtra']:$config['defaultAction'];
+        $action = @$path[0]?strtolower(array_shift($path)).$config['actionExtra']:$config['defaultAction'];
 
         if(!class_exists($controller)){
             die("controller <$controller> is undefined \n");

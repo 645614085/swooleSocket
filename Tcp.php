@@ -16,7 +16,7 @@ class Server
         'heartbeat_idle_time' => 60 * 60,
         'daemonize' => true,
         'worker_num' => 2,
-        'log_file' => '/home/www/web/Swoole/public_html/ceshi.log'
+        'log_file' => '/www/web/Swoole/ceshi.log'
     ];
 
 
@@ -48,9 +48,8 @@ class Server
     public function OnReceive($serv,$fd,$from_id,$data){
         echo "has Received form $fd=> $data","\n";
         $data = json_decode($data,true);
+        $this->copyGlobal($serv,$fd,$from_id);
         if(isset($data['path'])&&$data['params']){
-            echo "run =>>> \n";
-            $data['params']['fd'] = $fd;
             $serv->index->run($data['path'],$data['params']);
         }
         echo "Receive 执行结束 \n";
@@ -72,7 +71,13 @@ class Server
         $serv->index = new  \swoole\Run();
     }
 
+    public function copyGlobal($serv,$fd,$from_id){
+        $GLOBALS['serv'] = &$serv;
+        $GLOBALS['fd'] = $fd;
+        $GLOBALS['from_id'] = $from_id;
+    }
+
 
 }
 
-$server = new  Server();
+$serverBegin = new  Server();

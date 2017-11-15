@@ -32,8 +32,8 @@ class indexController
     public function indexAction($params)
     {
         echo $this->params;
-        var_dump(testModel::where(['c1'=>2])->select());
-        var_dump(testModel::add(['c1'=>2,'c2'=>3,'c3'=>4]));
+       // var_dump(testModel::where(['c1'=>2])->select());
+        var_dump(testModel::add(['c1'=>'aaa','c2'=>'bbbb','c3'=>'cccc']));
         var_dump(Redis::getInstance()->redis()->keys("*"));
     }
 }
