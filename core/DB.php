@@ -17,13 +17,16 @@ class DB
     //数据库连接句炳
     private $db = null;
 
+    private $pool ;
+
     public $config = array();
 
     //构造方法私有，无法外部实例化
     private function __construct($config = array())
     {
         $this->config = $config;
-        $this->connect();
+        $this->pool = new \SplQueue();
+        //$this->connect();
     }
 
     //唯一方式获取数据库连接对象
@@ -34,15 +37,33 @@ class DB
         return self::$instance;
     }
 
-    //获取数据库句炳
-    public function db(){
+    /**
+     * @param $mysql
+     * 回收连接资源
+     */
+    public function put($mysql){
+        $this->pool->push($mysql);
+    }
+
+    /**
+     * @return mixed|null
+     * 获取连接池中的数据库链接，协程
+     */
+    public function get(){
+        if (count($this->pool)>0){
+           return $this->pool->pop();
+        }
+        $this->connect();
+
         return $this->db;
     }
 
+
     //connect db
+    //mysql 协程
     public function connect(){
         $dsn = sprintf('mysql:host=%s;dbname=%s',$this->config['dbHost'],$this->config['dbName']);
-        $this->db = new \PDO($dsn,$this->config['dbUser'],$this->config['dbPwd']);
+        $this->db = new \Swoole\Coroutine\MySQL($dsn,$this->config['dbUser'],$this->config['dbPwd']);
     }
 
     //防止科隆

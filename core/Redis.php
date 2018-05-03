@@ -14,15 +14,28 @@ class Redis
 
     private static $instance = null;
 
-    private $redis = null;
+    private $pool ;
 
     private function __construct()
     {
-        $this->redis = new \Redis();
-        $redisConfig = env("redis");
-        $this->redis->pconnect($redisConfig['host'], $redisConfig['port']);
+        $this->pool = new \SplQueue();
     }
 
+
+    public function put($redis)
+    {
+        $this->pool->push($redis);
+    }
+
+    public function get(){
+        if (count($this->pool)>0){
+            return $this->pool->pop();
+        }
+
+        $redis = new \Swoole\Coroutine\Redis();
+        $redisConfig = env('redis');
+        return $redis->connect($redisConfig['host'],$redisConfig['port']);
+    }
 
     public static function getInstance()
     {
@@ -32,13 +45,6 @@ class Redis
         return self::$instance;
     }
 
-
-    public function redis()
-    {
-
-        return $this->redis;
-
-    }
 
     //防止科隆
     private function __clone()
