@@ -12,8 +12,8 @@ class Server
     private $server;
 
     private $config = [
-        'heartbeat_check_interval' => 20,
-        'heartbeat_idle_time' => 60 * 60,
+        'heartbeat_check_interval' => 30,
+        'heartbeat_idle_time' => 60,
         'daemonize' => true,
         'worker_num' => 2,
         'log_level'=>3,
